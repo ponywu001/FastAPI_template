@@ -43,3 +43,24 @@ def create_user(
     db.refresh(user)
 
     return user
+
+
+@handle_error
+def create_post(
+        db: Session,
+        title: str,
+        content: str,
+        image_url: str,
+        author_id: str
+) -> Type[models.Post] | models.Post | None:
+    post = models.Post(
+        title=title,
+        content=content,
+        image_url=image_url,
+        author_id=author_id
+    )
+    db.add(post)
+    db.commit()
+    db.refresh(post)
+
+    return post

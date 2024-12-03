@@ -1,7 +1,16 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 volume/mysql_data/mysql.sock 
 
 volume/mysql_data/* text eol=lf
 =======
 volume/mysql_data/mysql.sock
 >>>>>>> 07778d2 (check commit)
+=======
+volume/mysql_data/mysql.sock
+=======
+volume/mysql_data/mysql.sock 
+
+volume/mysql_data/* text eol=lf
+>>>>>>> cd3e213 (Initial commit)
+>>>>>>> a7b559f (Initial commit)

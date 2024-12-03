@@ -1,0 +1,16 @@
+fastapi[all]
+requests
+pytz
+redis
+sqlalchemy
+pymysql
+python-jose
+fastapi
+passlib
+bcrypt
+email-validator
+python-ulid[pydantic]
+redis[hiredis]
+boto3
+boto3==1.26.137
+python-multipart==0.0.6

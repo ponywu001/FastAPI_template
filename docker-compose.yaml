@@ -1,0 +1,49 @@
+services:
+  
+  # run FastAPI
+  backend:  
+    restart: always  # if container error causes stop, restart
+    build:  # docker image
+      context: .
+      dockerfile: Dockerfile  # select to run "Dockerfile"
+    ports:  
+      - "8000:8000"  # host's "8000" image to container's "8000"
+    env_file:
+      - .env  # environment variable
+    volumes:
+      - ./src:/run/src  # host's "./src" to container's "/run/src"
+    environment:
+      - PYTHONPATH=/run  # set Python sys.Path as "/run"
+    command: "python3.11 -m fastapi run src/server.py --host 0.0.0.0 --port 8000  --reload" 
+    # cmd after container creates, run FastAPI, select host 0.0.0.0 port 8000
+    networks:
+      - shared_network  # connect to network named "shared_network"
+  
+  # run MySQL
+  mysql:
+    image: mysql:8.3
+    restart: always  # if container error causes stop, restart
+    environment:
+      MYSQL_ROOT_PASSWORD: root  # root password for MySQL
+      MYSQL_USER: admin  # username
+      MYSQL_PASSWORD: admin1234  # password
+      MYSQL_DATABASE: template_db  # database's name
+    volumes:
+      - ./volume/mysql_data:/var/lib/mysql  # set MySQL to host's "./volume/mysql_data"
+    command: --default-authentication-plugin=mysql_native_password  # select MySQL to use "mysql_native_password" plugin
+    networks:
+      - shared_network  # connect to network named "shared_network"
+
+  # run redis 
+  redis:
+    image: redis:7.0-alpine
+    restart: always  # if container error causes stop, restart
+    networks:
+      - shared_network  # connect to network named "shared_network"
+    volumes:
+      - ./volume/redis_data:/data  # set redis to host's "./volume/redis_data"
+
+
+networks:
+  shared_network:
+    driver: bridge  # use "bridge" to connect containers in "shared_network"
